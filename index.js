@@ -283,7 +283,7 @@ Client.prototype._waitForDrain = function (pq, cb) {
 Client.prototype._dispatchQuery = function (pq, fn, cb) {
   this._stopReading()
   var success = pq.setNonBlocking(true)
-  if (!success) return cb(new Error('Unable to set non-blocking to true'))
+  if (!success) return cb(new Error(pq.errorMessage() || 'Unable to set non-blocking to true'))
   var sent = fn()
   if (!sent) return cb(new Error(pq.errorMessage() || 'Something went wrong dispatching the query'))
   this._waitForDrain(pq, cb)
